@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "tripster"
+version = "0.1.0"
+description = ""
+authors = ["TootyBooty <tooty6ooty@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.109.0"
+sqlalchemy = "^2.0.25"
+pydantic-settings = "^2.1.0"
+python-jose = "^3.3.0"
+alembic = "^1.13.1"
+asyncpg = "^0.29.0"
+pydantic = {extras = ["email"], version = "^2.6.0"}
+greenlet = "^3.0.3"
+uvicorn = "^0.27.0.post1"
+python-multipart = "^0.0.6"
+pre-commit = "^3.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = [
+    ".", "src/app",
+]
+asyncio_mode="auto"
