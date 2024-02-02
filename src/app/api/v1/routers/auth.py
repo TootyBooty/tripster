@@ -15,7 +15,7 @@ auth_router = APIRouter()
 async def register(
     user: UserCreate,
     uow: UOWDep,
-) -> int:
+) -> dict[str, int]:
     user_id = await UserService().create_user(uow, user)
     return {"user_id": user_id}
 

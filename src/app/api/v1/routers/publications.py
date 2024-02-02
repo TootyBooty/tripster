@@ -25,7 +25,7 @@ async def get_publication_list(
     limit: Annotated[int | None, Query(ge=1, le=100)] = None,
     offset: Annotated[int | None, Query(ge=0)] = None,
     order_by: Annotated[str | None, Query(example="created_at")] = None,
-    ascending: Annotated[bool | None, Query(example=True)] = None,
+    ascending: Annotated[bool | None, Query(example=False)] = None,
 ) -> list[PublicationShow]:
     publications_filter = PublicationListFilter(
         limit=limit, offset=offset, order_by=order_by, ascending=ascending
@@ -41,7 +41,7 @@ async def create_publication(
     publication: PublicationIn,
     author_id: IDFromToken,
     uow: UOWDep,
-) -> int:
+) -> dict[str, int]:
     publication_data = PublicationCreate(
         **publication.model_dump(), author_id=author_id
     )
@@ -57,7 +57,7 @@ async def rate_publication(
     uow: UOWDep,
     publication_id: int = Path(),
     reaction: PublicationReaction = Body(),
-) -> bool:
+) -> dict[str, bool]:
     publication_rate = PublicationRate(
         user_id=user_id, publication_id=publication_id, reaction=reaction
     )
@@ -70,7 +70,7 @@ async def unrate_publication(
     user_id: IDFromToken,
     uow: UOWDep,
     publication_id: int = Path(),
-) -> bool:
+) -> dict[str, bool]:
     unrate_filter = PublicationUnrate(user_id=user_id, publication_id=publication_id)
     is_unrated = await PublicationService().unrate_publication(uow, unrate_filter)
     return {"publication unrated": is_unrated}
